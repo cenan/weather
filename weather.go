@@ -173,8 +173,8 @@ func WeatherType(code int) (string, string) {
 	return t, c
 }
 
-func GetWeather(location string, apikey string) (*Weather, error) {
-	url := buildWeatherUrl(location, apikey)
+func GetWeather(location string, apikey string, apiType string) (*Weather, error) {
+	url := buildWeatherUrl(location, apikey, apiType)
 
 	res, err := http.Get(url)
 	if err != nil {
@@ -202,8 +202,8 @@ func parseWeatherResponse(res []byte) (*Weather, error) {
 	return &w.Data, nil
 }
 
-func buildWeatherUrl(location string, apikey string) string {
-	url := "http://free.worldweatheronline.com/feed/weather.ashx?"
+func buildWeatherUrl(location string, apikey string, apiType string) string {
+	url := "http://api.worldweatheronline.com/" + apiType + "/v1/weather.ashx?"
 	url += "format=json&num_of_days=5&key=" + apikey + "&q=" + location
 
 	return url
